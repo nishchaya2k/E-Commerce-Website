@@ -63,7 +63,7 @@ const Footer = () => {
                         QISTORE 2023 CREATED BY NishchayaNarula PREMIUM E-COMMERCE
                         SOLUTIONS.
                     </span>
-                    <img src={Payment} />
+                    <img src= {Payment} />
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ import Cart from "../Cart/Cart";
 const Header = () => {
 
     const [scrolled,setScrolled] = useState(false);
+    const [showCart,setShowCart] = useState(false);
 
 
     const handleScroll = () => {
@@ -27,24 +28,27 @@ const Header = () => {
     }, [])                    //dependency array contain state whenever it updates 
 
     return (
-        <header className={`main-header ${scrolled ? "sticky-header": ""}`}>
-            <div className="header-content">
-                <ul className="left">
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Categories</li>
-                </ul>
-                <div className="center">QISTORE.</div> {/* Quality Items Store */}
-                <div className="right">
-                    <TbSearch/>
-                    <AiOutlineHeart/>
-                    <span className="cart-icon">
-                        <CgShoppingCart/>
-                        <span>5</span>
-                    </span>
+        <>
+            <header className={`main-header ${scrolled ? "sticky-header": ""}`}>
+                <div className="header-content">
+                    <ul className="left">
+                        <li>Home</li>
+                        <li>About</li>
+                        <li>Categories</li>
+                    </ul>
+                    <div className="center">QISTORE.</div> {/* Quality Items Store */}
+                    <div className="right">
+                        <TbSearch/>
+                        <AiOutlineHeart/>
+                        <span className="cart-icon" onClick={() => setShowCart(true)}>
+                            <CgShoppingCart/>
+                            <span>5</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+           {showCart && <Cart setShowCart = {setShowCart}/>}
+        </>
     );
 };
 
