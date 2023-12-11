@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext,useState } from "react";
 
 // Create a Context object.
 export const Context = createContext();
@@ -7,8 +7,16 @@ export const Context = createContext();
 // Create a Provider component.
 const AppContext = ({children}) => {
 
+   const [categories,setCategories] = useState();
+   const [products,setProducts] = useState();
+
+   //we will pass all the states which we want them to be available globally for the all components
+   //we will write them in values     
+    
+
+
 // Make the user available to all descendant components.
-    return <Context.Provider>
+    return <Context.Provider value={{ categories,setCategories,products,setProducts}}>
                 {children}
            </Context.Provider>
 };
@@ -43,3 +51,4 @@ export default AppContext;
 
 
 
+// in this file now we will main states for the categories and for the products
