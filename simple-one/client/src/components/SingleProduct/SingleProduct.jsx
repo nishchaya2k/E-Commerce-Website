@@ -23,7 +23,8 @@ const SingleProduct = () => {
     const {id} = useParams();  //why we writing id to get value from useParam(), becoz we made it a key in app.js, where we wrote id in Route 'products/:id' so id is basically a key
     const {data} = useFetch(`/api/products?populate=*&[filters][id] = ${id}`) //filter on the basis of id
     const [quantity,setQuantity] = useState(1);
-    
+    const {handleAddToCart} = useContext(Context);
+
     const increment = () => {
         setQuantity((prevState) => prevState+1);
     }
@@ -61,7 +62,12 @@ const SingleProduct = () => {
                                 <span>{quantity}</span>
                                 <span onClick={increment}>+</span>
                             </div>
-                            <button className="add-to-cart-button">
+                            <button 
+                                className="add-to-cart-button" 
+                                onClick={() => {
+                                        handleAddToCart(data.data[0],quantity)
+                                        setQuantity(1);
+                                        }}>
                                 <FaCartPlus size={20}/>
                                 ADD TO CART
                             </button>
