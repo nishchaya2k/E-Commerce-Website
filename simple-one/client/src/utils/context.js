@@ -1,5 +1,5 @@
 import { createContext,useEffect,useState } from "react";
-// import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // Create a Context object.
 export const Context = createContext();
@@ -14,13 +14,28 @@ const AppContext = ({children}) => {
    const [cartItems, setCartItems] = useState([]);          //cartItems is an array contain all the products
    const [cartCount, setCartCount] = useState(0);
    const [cartSubTotal, setCartSubTotal] = useState(0);
-   // const location = useLocation();
+   const location = useLocation();
 
    //we will pass all the states which we want them to be available globally for the all components
    //we will write them in values     
    
+   useEffect(()=>{
+      window.scrollTo(0,0)
+   },[location]);
 
-   useEffect(() => {},[cartItems]);
+   useEffect(() => {
+      let count = 0;
+      cartItems?.map((item) => (count += item.attributes.quantity));
+      setCartCount(count);
+
+      let subTotal = 0;
+      cartItems.map(
+          (item) =>
+              (subTotal += item.attributes.price * item.attributes.quantity)
+      );
+      setCartSubTotal(subTotal);
+  }, [cartItems]);
+
    
    const handleAddToCart = (product, quantity) => {
       let items = [...cartItems];            //shallow copy of cartItems
@@ -36,10 +51,22 @@ const AppContext = ({children}) => {
 
   const handleRemoveFromCart = (product) => {
     let items = [...cartItems];
-    items.filter((p) => p.id !== product.id);  //except the selected product for the removal, filter out all the products and then update the state
+    items = items?.filter((p) => p.id !== product?.id);  //except the selected product for the removal, filter out all the products and then update the state
     setCartItems(items); 
+    
   }
 
+  const handleCartProductQuantity = (type, product) => {
+   let items = [...cartItems];
+   let index = items?.findIndex((p) => p.id === product?.id);
+   if (type === "inc") {
+       items[index].attributes.quantity += 1;
+   } else if (type === "dec") {
+       if (items[index].attributes.quantity === 1) return;
+       items[index].attributes.quantity -= 1;
+   }
+   setCartItems(items);
+};
 
 
 
@@ -57,7 +84,7 @@ const AppContext = ({children}) => {
                handleRemoveFromCart,
                showCart,
                setShowCart,
-               // handleCartProductQuantity,
+               handleCartProductQuantity,
                cartSubTotal,
                }}>
 
