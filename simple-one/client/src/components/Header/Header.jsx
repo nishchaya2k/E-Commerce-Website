@@ -7,15 +7,18 @@ import "./Header.scss";
 import Search from "./Search/Search";
 import { Context } from "../../utils/context";
 import Cart from "../Cart/Cart";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
 
     const [scrolled,setScrolled] = useState(false);
+    const [catScroll,setCatScroll] = useState(false);
     const [showCart,setShowCart] = useState(false);
     const [showSearch, setShowSearch] = useState(false)
 
     const {cartCount} = useContext(Context);
     const navigate = useNavigate();
+    const location = useLocation();
 
 
     const handleScroll = () => {
@@ -25,6 +28,16 @@ const Header = () => {
 
         else
         setScrolled(false)
+    }
+
+    const handleCatScroll=()=>{
+        if(location.pathname == "/")
+        {
+            window.scrollTo({
+                top: 700,
+                behavior: "smooth",
+              });
+        }
     }
 
     useEffect(() => {           //its a hook, its a first method which run after rendering of component  
@@ -38,7 +51,7 @@ const Header = () => {
                     <ul className="left">
                         <li onClick={()=>navigate("/")}>Home</li>
                         <li>About</li>
-                        <li>Categories</li>
+                        <li onClick={handleCatScroll}>Categories</li>
                     </ul>
                     <div className="center" onClick={()=>navigate("/")}>QISTORE.</div> {/* Quality Items Store */}
                     <div className="right">

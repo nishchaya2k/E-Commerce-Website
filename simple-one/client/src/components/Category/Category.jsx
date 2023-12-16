@@ -3,6 +3,10 @@ import "./Category.scss";
 import {useParams} from "react-router-dom";    
 import useFetch from "../../hooks/useFetch"
 
+
+//when we navigate from the Home/Category/Category.jsx we render this component
+
+
 const Category = () => {
 
     const {id} = useParams();

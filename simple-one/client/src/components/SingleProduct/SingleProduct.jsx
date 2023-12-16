@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../utils/context";
 import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import "./SingleProduct.scss";
 import prod from "../../assets/products/earbuds-prod-1.webp"
-
 import  useFetch from "../../hooks/useFetch";
 import {useParams} from "react-router-dom";
 
@@ -40,8 +39,10 @@ const SingleProduct = () => {
     if(!data) return;
     const product = data?.data?.[0]?.attributes
 
+   
     return (
-        <div className="single-product-main-content">
+       
+       <div className="single-product-main-content">
             <div className="layout">
                 <div className="single-product-page">
 
